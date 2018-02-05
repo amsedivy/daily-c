@@ -1,0 +1,24 @@
+{
+  "name": "daily-c",
+  "version": "0.0.0",
+  "description": "exploring javascript sound api and midi control",
+  "main": "app.js",
+  "repository": "https://amsedivy@github.com/amsedivy/daily-c.git",
+  "author": "amsedivy",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "babel": "^6.23.0",
+    "express": "^4.16.2",
+    "node-fetch": "^2.0.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "rx-dom": "^7.0.3",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "rx": "^4.1.0"
+  }
+}

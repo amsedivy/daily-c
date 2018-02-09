@@ -1,19 +1,21 @@
 import Express from 'express';
-import daily_c from './server/app';
+import { renderToString } from 'react-dom/server';
+import dailyC from './server/app';
+import template from './client/view/layout/template';
 
 const port = process.env.PORT || 8081;
-const app = new Express();
-const log = console;
+const server = new Express();
 
-app.use('/', daily_c(app));
+server.use('/assets', Express.static('assets'));
 
-const listener = app.listen(port, '0.0.0.0', () => {
-    let host = listener.address().address;
-    if (host === '::') {
-        host = 'localhost';
-    }
+server.get('/', (req, res) => {
+  const appString = renderToString(dailyC);
 
-    log.info(`START UP http://${host}${port === 80 ? '' : `:${port}`}`);
+  res.send(template({
+    body: appString,
+    title: 'daily-c',
+  }));
 });
 
-export default app;
+
+server.listen(port);

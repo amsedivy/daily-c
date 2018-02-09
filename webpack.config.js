@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var nodeExternals = require('webpack-node-externals');
+var path = require('path');
 
 var isProduction = process.env.NODE_ENV === 'production';
 var productionPluginDefine = isProduction ? [
@@ -19,11 +20,13 @@ var commonLoaders = [
     }
 ];
 
+var dist = path;
+
 module.exports = [
     {
-        entry: './src/server.js',
+        entry: path.resolve(__dirname, 'src/server.js'),
         output: {
-            path: './dist',
+            path: path.resolve(__dirname, 'dist'),
             filename: 'server.js',
             libraryTarget: 'commonjs2',
             publicPath: '/'
@@ -43,15 +46,15 @@ module.exports = [
             loaders: [
                 {
                     test: /\.js$/,
-                    loader: 'babel'
+                    loader: 'babel-loader'
                 }
             ].concat(commonLoaders)
         }
     },
     {
-        entry: './src/client/browser.js',
+        entry: path.resolve(__dirname, 'src/client/view/browser.js'),
         output: {
-            path: './dist/assets',
+            path: path.resolve(__dirname, 'dist/assets'),
             publicPath: '/',
             filename: 'bundle.js'
         },
@@ -65,7 +68,7 @@ module.exports = [
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
-                    loader: 'babel'
+                    loader: 'babel-loader'
                 },
                 {
                     test: /\.scss$/,
@@ -74,7 +77,7 @@ module.exports = [
             ]
         },
         resolve: {
-            extensions: ['', '.js', '.jsx']
+            extensions: ['.js', '.jsx']
         }
     }
 ];

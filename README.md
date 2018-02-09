@@ -11,6 +11,6 @@ Dev tools in use (an ongoing list)
 4. babel (ecma6 / 2015 compatibility)
 
 Forthcoming
-5. node / react (server and server side rendering)
-6. sass (for pretty css stuffs)
-5. docker (for AWS deployment)
+1. node / react (server and server side rendering)
+2. sass (for pretty css stuffs)
+3. docker (for AWS deployment)

@@ -15,7 +15,7 @@ class Conudctor {
     const { numStreams } = chanceMngr;
     for (let i = 0; i < numStreams; i += 1) {
       const stream = new Stream();
-      stream.addListener('partComplete', this.handlePartComplete)
+      stream.addListener('partComplete', this.handlePartComplete);
       streams.push(stream);
     }
 

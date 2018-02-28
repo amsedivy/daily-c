@@ -48,8 +48,8 @@ class CentralDispatch {
     const chnnl = listeners.get(channel) || null;
     const evt = chnnl.get(evtType) || null;
 
-    evt.forEach((listener) => {
-      listener(...args);
+    evt.forEach((callback) => {
+      callback(...args);
     });
   }
 }

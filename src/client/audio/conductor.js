@@ -25,6 +25,10 @@ class Conudctor {
   handlePartComplete(evt) {
     console.log(evt);
   }
+
+  get streams() {
+    return [].concat(streams);
+  }
 }
 
 export default Conudctor;

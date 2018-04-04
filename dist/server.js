@@ -99,7 +99,7 @@ var _app = __webpack_require__(4);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _template = __webpack_require__(9);
+var _template = __webpack_require__(10);
 
 var _template2 = _interopRequireDefault(_template);
 
@@ -218,33 +218,43 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _indeterminanceManager = __webpack_require__(9);
+
+var _indeterminanceManager2 = _interopRequireDefault(_indeterminanceManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global alert */
+
 
 var Index = function (_React$Component) {
   _inherits(Index, _React$Component);
 
-  function Index() {
+  function Index(props) {
     _classCallCheck(this, Index);
 
-    return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
+
+    _this.props = props;
+    return _this;
   }
 
   _createClass(Index, [{
     key: 'render',
     value: function render() {
+      var mngr = new _indeterminanceManager2.default();
+      alert(mngr.numStreams);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h1',
           null,
-          'hello world'
+          'Views forthcoming (see designs folder)'
         )
       );
     }
@@ -254,10 +264,73 @@ var Index = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Index;
-;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/** this will be a class to manage the different streams of playback
+ telling an individual stream to repeat, rest, or advance */
+
+var state = {};
+var instance = null;
+
+var PlaybackManager = function () {
+  function PlaybackManager() {
+    _classCallCheck(this, PlaybackManager);
+
+    if (!instance) {
+      instance = this;
+    }
+
+    state.numStreams = Math.floor(Math.random() * 4) + 6;
+    return this;
+  }
+
+  // stub of example function to determine choice
+
+
+  _createClass(PlaybackManager, [{
+    key: 'nextAction',
+    value: function nextAction(maxReps) {
+      var percent = Math.floor(Math.random() * 100) + 1;
+      var action = 'rest';
+      if (percent <= 50) {
+        action = percent <= 35 && !maxReps ? 'repeat' : 'advance';
+      } else {
+        action = percent <= 85 ? 'rest' : 'skip';
+      }
+
+      return action;
+    }
+
+    // just statics for now until we set up singleton values
+
+  }, {
+    key: 'numStreams',
+    get: function get() {
+      return state.numStreams;
+    }
+  }]);
+
+  return PlaybackManager;
+}();
+
+exports.default = PlaybackManager;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

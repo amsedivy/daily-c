@@ -28,7 +28,7 @@ class PlaybackManager {
   }
 
   // just statics for now until we set up singleton values
-  numStreams() {
+  get numStreams() {
     return state.numStreams;
   }
 }

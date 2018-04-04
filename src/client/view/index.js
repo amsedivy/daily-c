@@ -1,4 +1,6 @@
+/* global alert */
 import React from 'react';
+import ChanceMngr from '../../control/indeterminanceManager';
 
 class Index extends React.Component {
   constructor(props) {
@@ -7,6 +9,8 @@ class Index extends React.Component {
   }
 
   render() {
+    const mngr = new ChanceMngr();
+    alert(mngr.numStreams);
     return (
       <div>
         <h1>Views forthcoming (see designs folder)</h1>

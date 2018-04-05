@@ -99,7 +99,7 @@ var _app = __webpack_require__(4);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _template = __webpack_require__(14);
+var _template = __webpack_require__(16);
 
 var _template2 = _interopRequireDefault(_template);
 
@@ -222,7 +222,7 @@ var _conductor = __webpack_require__(9);
 
 var _conductor2 = _interopRequireDefault(_conductor);
 
-var _instrument = __webpack_require__(12);
+var _instrument = __webpack_require__(14);
 
 var _instrument2 = _interopRequireDefault(_instrument);
 
@@ -296,6 +296,14 @@ var _playbackStream = __webpack_require__(11);
 
 var _playbackStream2 = _interopRequireDefault(_playbackStream);
 
+var _centralDispatch = __webpack_require__(12);
+
+var _centralDispatch2 = _interopRequireDefault(_centralDispatch);
+
+var _eventTypes = __webpack_require__(13);
+
+var _eventTypes2 = _interopRequireDefault(_eventTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -312,18 +320,21 @@ var Conudctor = function () {
       instance = this;
       var numStreams = chanceMngr.numStreams;
 
+
       for (var i = 0; i < numStreams; i += 1) {
         var stream = new _playbackStream2.default();
         streams.push(stream);
       }
+
+      _centralDispatch2.default.addListener(_eventTypes2.default.SECTION_COMPLETE, this.handleSectionComplete);
     }
 
     return this;
   }
 
   _createClass(Conudctor, [{
-    key: 'handlePartComplete',
-    value: function handlePartComplete(evt) {
+    key: 'handleSectionComplete',
+    value: function handleSectionComplete(evt) {
       console.log(evt);
     }
   }, {
@@ -450,11 +461,108 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var instance = null;
+
+var CentralDispatch = function () {
+  function CentralDispatch() {
+    _classCallCheck(this, CentralDispatch);
+
+    if (!instance) {
+      instance = this;
+    }
+
+    this.evts = new Map();
+    return this;
+  }
+
+  _createClass(CentralDispatch, [{
+    key: "addListener",
+    value: function addListener(evtType, callback) {
+      var evts = this.evts;
+
+
+      var type = evts.get(evtType) || [];
+      type.push(callback);
+    }
+  }, {
+    key: "removeListener",
+    value: function removeListener(evtType, callback) {
+      var evts = this.evts;
+
+      var evt = evts.get(evtType) || null;
+      var long = evt.length || 0;
+      var matches = [];
+
+      for (var i = 0; i < long; i += 1) {
+        if (evt[i] === callback) {
+          matches.push(i);
+        }
+      }
+
+      matches.sort(function (a, b) {
+        return b - a;
+      });
+      matches.map(function (idx) {
+        return evt.slice(idx);
+      });
+    }
+  }, {
+    key: "disptch",
+    value: function disptch(evtType, channel) {
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      var listeners = this.listeners;
+
+      var chnnl = listeners.get(channel) || null;
+      var evt = chnnl.get(evtType) || null;
+
+      evt.forEach(function (callback) {
+        callback.apply(undefined, args);
+      });
+    }
+  }]);
+
+  return CentralDispatch;
+}();
+
+exports.default = new CentralDispatch();
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  SECTION_COMPLETE: 'sectionComplete'
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(13);
+var _propTypes = __webpack_require__(15);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -512,13 +620,13 @@ Instrument.defaultProps = {
 };
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("prop-types");
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

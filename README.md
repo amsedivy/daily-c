@@ -15,4 +15,7 @@ Forthcoming
 1. sass (for pretty css stuffs)
 2. docker (for AWS deployment)
 
-To begin, simply run 'yarn install in your project folder in the terminal client'
+To begin
+- simply run 'yarn install in your project folder in the terminal client'
+- execute the build process with 'npm run build'
+- 'npm run start' should initiate your local host server for testing

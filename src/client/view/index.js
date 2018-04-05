@@ -1,6 +1,6 @@
-/* global alert */
 import React from 'react';
-import ChanceMngr from '../../control/indeterminanceManager';
+import Conductor from '../audio/conductor';
+import Instrument from './components/instrument';
 
 class Index extends React.Component {
   constructor(props) {
@@ -9,11 +9,13 @@ class Index extends React.Component {
   }
 
   render() {
-    const mngr = new ChanceMngr();
-    alert(mngr.numStreams);
+    const ensemble = Conductor.streams;
     return (
       <div>
-        <h1>Views forthcoming (see designs folder)</h1>
+        <h1>build out views here (see designs folder)</h1>
+        {
+          ensemble.map(inst => <Instrument id={inst.id} section={inst.startPoint} />)
+        }
       </div>
     );
   }

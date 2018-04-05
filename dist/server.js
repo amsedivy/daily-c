@@ -68,19 +68,19 @@ module.exports =
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("express");
+module.exports = require("react");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom/server");
+module.exports = require("express");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = require("react-dom/server");
 
 /***/ }),
 /* 3 */
@@ -89,17 +89,17 @@ module.exports = require("react");
 "use strict";
 
 
-var _express = __webpack_require__(0);
+var _express = __webpack_require__(1);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _server = __webpack_require__(1);
+var _server = __webpack_require__(2);
 
 var _app = __webpack_require__(4);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _template = __webpack_require__(10);
+var _template = __webpack_require__(14);
 
 var _template2 = _interopRequireDefault(_template);
 
@@ -148,11 +148,11 @@ var _nodeFetch = __webpack_require__(5);
 
 var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
-var _server = __webpack_require__(1);
+var _server = __webpack_require__(2);
 
 var _server2 = _interopRequireDefault(_server);
 
-var _express = __webpack_require__(0);
+var _express = __webpack_require__(1);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -177,7 +177,7 @@ module.exports = require("node-fetch");
 "use strict";
 
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -214,13 +214,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _indeterminanceManager = __webpack_require__(9);
+var _conductor = __webpack_require__(9);
 
-var _indeterminanceManager2 = _interopRequireDefault(_indeterminanceManager);
+var _conductor2 = _interopRequireDefault(_conductor);
+
+var _instrument = __webpack_require__(12);
+
+var _instrument2 = _interopRequireDefault(_instrument);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -228,8 +232,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global alert */
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Index = function (_React$Component) {
   _inherits(Index, _React$Component);
@@ -246,16 +249,18 @@ var Index = function (_React$Component) {
   _createClass(Index, [{
     key: 'render',
     value: function render() {
-      var mngr = new _indeterminanceManager2.default();
-      alert(mngr.numStreams);
+      var ensemble = _conductor2.default.streams;
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h1',
           null,
-          'Views forthcoming (see designs folder)'
-        )
+          'build out views here (seed designs folder)'
+        ),
+        ensemble.map(function (inst) {
+          return _react2.default.createElement(_instrument2.default, { id: inst.id, section: inst.startPoint });
+        })
       );
     }
   }]);
@@ -267,6 +272,70 @@ exports.default = Index;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** this will be the manager of the playback streams */
+
+
+var _indeterminanceManager = __webpack_require__(10);
+
+var _indeterminanceManager2 = _interopRequireDefault(_indeterminanceManager);
+
+var _playbackStream = __webpack_require__(11);
+
+var _playbackStream2 = _interopRequireDefault(_playbackStream);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var chanceMngr = new _indeterminanceManager2.default();
+var streams = [];
+var instance = null;
+
+var Conudctor = function () {
+  function Conudctor() {
+    _classCallCheck(this, Conudctor);
+
+    if (!instance) {
+      instance = this;
+      var numStreams = chanceMngr.numStreams;
+
+      for (var i = 0; i < numStreams; i += 1) {
+        var stream = new _playbackStream2.default();
+        streams.push(stream);
+      }
+    }
+
+    return this;
+  }
+
+  _createClass(Conudctor, [{
+    key: 'handlePartComplete',
+    value: function handlePartComplete(evt) {
+      console.log(evt);
+    }
+  }, {
+    key: 'streams',
+    get: function get() {
+      return [].concat(streams);
+    }
+  }]);
+
+  return Conudctor;
+}();
+
+exports.default = new Conudctor();
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -330,7 +399,117 @@ var PlaybackManager = function () {
 exports.default = PlaybackManager;
 
 /***/ }),
-/* 10 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PlaybackStream = function () {
+  function PlaybackStream(id) {
+    _classCallCheck(this, PlaybackStream);
+
+    this.id = id;
+    this.beginAt = Math.floor(Math.random() * 5) + 1;
+  }
+
+  _createClass(PlaybackStream, [{
+    key: "startPoint",
+    get: function get() {
+      return this.beginAt;
+    }
+  }]);
+
+  return PlaybackStream;
+}();
+
+exports.default = PlaybackStream;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(13);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Instrument = function (_React$Component) {
+  _inherits(Instrument, _React$Component);
+
+  function Instrument(props) {
+    _classCallCheck(this, Instrument);
+
+    var _this = _possibleConstructorReturn(this, (Instrument.__proto__ || Object.getPrototypeOf(Instrument)).call(this, props));
+
+    _this.props = props;
+    _this.id = props.id;
+    return _this;
+  }
+
+  _createClass(Instrument, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'section no.' + this.props.section
+      );
+    }
+  }]);
+
+  return Instrument;
+}(_react2.default.Component);
+
+exports.default = Instrument;
+
+
+Instrument.propTypes = {
+  section: _propTypes2.default.number,
+  id: _propTypes2.default.string
+};
+
+Instrument.defaultProps = {
+  section: 0,
+  id: String(Math.floor(Math.random() * 100))
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

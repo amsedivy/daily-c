@@ -10,13 +10,11 @@ class Conudctor {
   constructor() {
     if (!instance) {
       instance = this;
-    }
-
-    const { numStreams } = chanceMngr;
-    for (let i = 0; i < numStreams; i += 1) {
-      const stream = new Stream();
-      stream.addListener('partComplete', this.handlePartComplete);
-      streams.push(stream);
+      const { numStreams } = chanceMngr;
+      for (let i = 0; i < numStreams; i += 1) {
+        const stream = new Stream();
+        streams.push(stream);
+      }
     }
 
     return this;
@@ -31,4 +29,4 @@ class Conudctor {
   }
 }
 
-export default Conudctor;
+export default new Conudctor();

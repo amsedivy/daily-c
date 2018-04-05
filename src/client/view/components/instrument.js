@@ -9,7 +9,7 @@ class Instrument extends React.Component {
   }
 
   render() {
-    return <div>${this.props.section}</div>;
+    return <div>{'section no.' + this.props.section}</div>;
   }
 }
 

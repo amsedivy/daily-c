@@ -14,7 +14,12 @@ class Index extends React.Component {
       <div>
         <h1>build out views here (see designs folder)</h1>
         {
-          ensemble.map(inst => <Instrument id={inst.id} section={inst.startPoint} />)
+          ensemble.map((inst, i) => (
+            <Instrument
+              key={`inst${inst.startPoint * Math.random()}`}
+              id={`instrument ${i + 1}`}
+              section={inst.startPoint}
+            />))
         }
       </div>
     );

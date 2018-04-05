@@ -19509,10 +19509,14 @@ var Index = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'build out views here (seed designs folder)'
+          'build out views here (see designs folder)'
         ),
-        ensemble.map(function (inst) {
-          return _react2.default.createElement(_instrument2.default, { id: inst.id, section: inst.startPoint });
+        ensemble.map(function (inst, i) {
+          return _react2.default.createElement(_instrument2.default, {
+            key: 'inst' + inst.startPoint * Math.random(),
+            id: 'instrument ' + (i + 1),
+            section: inst.startPoint
+          });
         })
       );
     }
@@ -19734,7 +19738,12 @@ var Instrument = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'section no.' + this.props.section
+        _react2.default.createElement(
+          'b',
+          null,
+          '' + this.id
+        ),
+        ', section no.' + this.props.section
       );
     }
   }]);

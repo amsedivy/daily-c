@@ -9,7 +9,7 @@ class Instrument extends React.Component {
   }
 
   render() {
-    return <div>{'section no.' + this.props.section}</div>;
+    return <div><b>{`${this.id}`}</b>{`, section no.${this.props.section}`}</div>;
   }
 }
 

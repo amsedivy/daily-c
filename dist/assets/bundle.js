@@ -19686,7 +19686,7 @@ var PlaybackStream = function () {
     _classCallCheck(this, PlaybackStream);
 
     this.id = id;
-    this.beginAt = Math.floor(Math.random() * 5) + 1;
+    this.beginAt = Math.floor(Math.random() * 5);
   }
 
   _createClass(PlaybackStream, [{
@@ -19851,7 +19851,7 @@ var Instrument = function (_React$Component) {
           null,
           '' + this.id
         ),
-        ', section no.' + this.props.section
+        ', section no.' + (this.props.section + 1)
       );
     }
   }]);

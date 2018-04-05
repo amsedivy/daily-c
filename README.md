@@ -9,8 +9,10 @@ Dev tools in use (an ongoing list)
 2. eslint / airbnb standards (for obnoxiously strict code standards)
 3. webpack (for bundling distribution)
 4. babel (ecma6 / 2015 compatibility)
+5. node / react (server and server side rendering)
 
 Forthcoming
-1. node / react (server and server side rendering)
-2. sass (for pretty css stuffs)
-3. docker (for AWS deployment)
+1. sass (for pretty css stuffs)
+2. docker (for AWS deployment)
+
+To begin, simply run 'yarn install in your project folder in the terminal client'

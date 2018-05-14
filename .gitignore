@@ -3,4 +3,4 @@
 /yarn.lock
 /node_modules
 /design/workingComp.psd
-dist/
+/dist/

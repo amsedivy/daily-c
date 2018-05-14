@@ -10,38 +10,48 @@ let instance = null;
 
 class Conudctor {
   constructor() {
+    // this is a singleton so create some properties only if instance is null
     if (!instance) {
       instance = this;
+      // get number of instrument streams from the chance manager
       const { numStreams } = chanceMngr;
       this.streamList = [];
+      // create a metronome to control the pace
       this.metronome = new Metronome();
 
       for (let i = 0; i < numStreams; i += 1) {
+        // create and store new instrument streams
         const stream = new Stream();
         this.streamList.push(stream);
       }
 
+      // create a unique id for verification purposes, if needed
       this.uid = Math.floor(Math.random() * 999);
 
+      // add event listeners
       EventDispatcher.addListener(EvtTypes.SECTION_COMPLETE, this.handleSectionComplete);
     }
 
-    return this;
+    // return the unique instance
+    return instance;
   }
 
   initPeformance() {
+    // start the metronome
     this.metronome.start();
   }
 
-  handleSectionComplete(evt) {
-    console.log(evt);
+  handleSectionComplete(evt, payload) {
+    console.log(evt, payload);
   }
 
   get streams() {
+    // return a copy of the streamList
     return [].concat(this.streamList);
   }
 
   get id() {
+    // return the unique id
     return this.uid;
   }
 }

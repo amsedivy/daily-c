@@ -7,6 +7,7 @@ import EvtTypes from '../../model/enum/eventTypes';
 const chanceMngr = new Indeterminancy();
 const streams = [];
 let instance = null;
+let id;
 
 class Conudctor {
   constructor() {
@@ -18,6 +19,8 @@ class Conudctor {
         const stream = new Stream();
         streams.push(stream);
       }
+
+      id = Math.floor(Math.random() * 999);
 
       EventDispatcher.addListener(EvtTypes.SECTION_COMPLETE, this.handleSectionComplete);
     }
@@ -31,6 +34,10 @@ class Conudctor {
 
   get streams() {
     return [].concat(streams);
+  }
+
+  get id() {
+    return id;
   }
 }
 

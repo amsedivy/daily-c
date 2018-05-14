@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Express from 'express';
 import Index from '../client/view/browser';
@@ -11,7 +12,7 @@ export default function () {
 
   router.get('/', (req, res) => {
     res.render('/view/index', {
-      html: ReactDOMServer.renderToString(<Index/>),
+      html: ReactDOMServer.renderToString(<Index />),
     });
   });
 

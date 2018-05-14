@@ -25,6 +25,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -39,6 +40,7 @@
   },
   "scripts": {
     "start": "cd dist && node server",
-    "build": "webpack"
+    "build": "webpack",
+    "test": "./node_modules/.bin/mocha --reporter spec  --compilers js:babel-register"
   }
 }

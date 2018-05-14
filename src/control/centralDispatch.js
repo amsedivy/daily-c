@@ -1,10 +1,12 @@
 
 let instance = null;
+let id;
 
 class CentralDispatch {
   constructor() {
     if (!instance) {
       instance = this;
+      id = Math.floor(Math.random() * 999);
     }
 
     this.evts = new Map();
@@ -42,6 +44,10 @@ class CentralDispatch {
     evt.forEach((callback) => {
       callback(...args);
     });
+  }
+
+  get id() {
+    return id;
   }
 }
 

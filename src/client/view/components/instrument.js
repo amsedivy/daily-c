@@ -1,15 +1,17 @@
 import React from 'react';
 import Type from 'prop-types';
+import InstrumentTypes from '../../../model/enum/instrumentTypes';
 
 class Instrument extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
     this.id = props.id;
+    this.performer = InstrumentTypes[Math.floor(Math.random() * InstrumentTypes.length)];
   }
 
   render() {
-    return <div><b>{`${this.id}`}</b>{`, section no.${this.props.section + 1}`}</div>;
+    return <div><b>{`${this.performer}`}</b>{`, section no.${this.props.section + 1}`}</div>;
   }
 }
 

@@ -2,6 +2,9 @@ import React from 'react';
 import Type from 'prop-types';
 import InstrumentTypes from '../../../model/enum/instrumentTypes';
 
+/*
+  class Instrument is the visual element representing a single playback stream
+ */
 class Instrument extends React.Component {
   constructor(props) {
     super(props);

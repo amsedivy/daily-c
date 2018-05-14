@@ -1,3 +1,4 @@
+// simple list of instrument names available
 export default [
   'violin',
   'viola',

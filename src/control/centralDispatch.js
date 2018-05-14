@@ -1,53 +1,67 @@
 
 let instance = null;
-let id;
 
 class CentralDispatch {
   constructor() {
     if (!instance) {
+      // create an instance to hand out
       instance = this;
-      id = Math.floor(Math.random() * 999);
+      // store a unique id for verification purposes
+      this.uid = Math.floor(Math.random() * 999);
     }
 
+    // create a map for event types
     this.evts = new Map();
-    return this;
+    return instance;
   }
 
   addListener(evtType, callback) {
     const { evts } = this;
 
-    const type = evts.get(evtType) || [];
+    if (!evts.get(evtType)) {
+      // create an item on the map if there is none
+      evts.set(evtType, []);
+    }
+
+    // get the listener array by event type
+    const type = evts.get(evtType);
+    // add the listener to the event type's array
     type.push(callback);
   }
 
   removeListener(evtType, callback) {
+    // get the listeners by event
     const { evts } = this;
-    const evt = evts.get(evtType) || null;
+    const evt = evts.get(evtType) || [];
     const long = evt.length || 0;
     const matches = [];
 
+    // if any of the listeners match the callback add their index to the array
     for (let i = 0; i < long; i += 1) {
       if (evt[i] === callback) {
         matches.push(i);
       }
     }
 
+    // reverse the array, to work backwards
     matches.sort((a, b) => b - a);
+    // remove all the items at those indices
     matches.map(idx => evt.slice(idx));
   }
 
-  disptch(evtType, channel, ...args) {
-    const { listeners } = this;
-    const chnnl = listeners.get(channel) || null;
-    const evt = chnnl.get(evtType) || null;
+  disptchEvent(evtType, ...args) {
+    // get listeners by event type
+    const { evts } = this;
+    const listeners = evts.get(evtType) || [];
 
-    evt.forEach((callback) => {
-      callback(...args);
+    // fire each listener including the event type and any arguments
+    listeners.forEach((callback) => {
+      callback(evtType, ...args);
     });
   }
 
   get id() {
-    return id;
+    return this.uid;
   }
 }
 

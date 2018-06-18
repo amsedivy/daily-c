@@ -47,6 +47,10 @@ module.exports = [
                 {
                     test: /\.js$/,
                     loader: 'babel-loader'
+                },
+                {
+                    test: /\.scss$/,
+                    loaders: ["css-loader", "sass-loader"]
                 }
             ].concat(commonLoaders)
         }
@@ -72,12 +76,12 @@ module.exports = [
                 },
                 {
                     test: /\.scss$/,
-                    loader: ExtractTextPlugin.extract('css!sass')
+                    loader: ExtractTextPlugin.extract('css-loader!sass-loader')
                 }
             ]
         },
         resolve: {
-            extensions: ['.js']
+            extensions: ['.js', '.scss']
         }
     }
 ];

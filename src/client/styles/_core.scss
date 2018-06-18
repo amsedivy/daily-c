@@ -1,5 +1,9 @@
-{
-  .ensemble {
-    background: blanchedalmond;
+.ensemble {
+  position: relative;
+  background: blanchedalmond;
+  width: 80%;
+  left: 2em;
+  .instrument {
+    padding: 1em;
   }
 }

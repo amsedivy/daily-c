@@ -1,6 +1,8 @@
 import React from 'react';
 import Conductor from '../audio/conductor';
 import Instrument from './components/instrument';
+import Dispatcher from '../../control/centralDispatch';
+import EventTypes from '../../model/enum/eventTypes';
 
 class Index extends React.Component {
   constructor(props) {
@@ -8,9 +10,12 @@ class Index extends React.Component {
     this.props = props;
   }
 
+  componentDidMount() {
+    Dispatcher.disptchEvent(EventTypes.INIT_COMPLETE);
+  }
+
   render() {
     const ensemble = Conductor.streams;
-    console.log(ensemble[0].voice);
     return (
       <div>
         <h1>build out views here (see designs folder)</h1>

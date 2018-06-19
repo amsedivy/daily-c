@@ -25,10 +25,12 @@ class PartsLibrary {
     // use node-fetch to load json and parse it, placing the array in the inC object.
   }
 
+  // return a section from the composition list by index (0 being a rest before starting)
   static getSection(num) {
     return (num < inC.parts.length) ? Object.assign(inC.parts[num]) : null;
   }
 
+  // get the length of the array (will be constant, but hey, it doesn't hurt to be dynamic)
   static get numSections() { return inC.parts.length; }
 }
 

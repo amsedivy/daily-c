@@ -17,6 +17,7 @@ class Metronome {
       // keep track of the place in a 'bar' or 4/4 music
       this.barCounter += 1;
 
+      // if we've reached the end of the bar, reset the counter and dispatch the bar event
       if (this.barCounter === 4) {
         this.barCounter = 0;
         EventDispatcher.dispatchEvent(EventTypes.BAR);

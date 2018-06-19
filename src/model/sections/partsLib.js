@@ -4,7 +4,15 @@
  future iterations will be access to midi files */
 
 const inC = {
-  parts: [],
+  parts: [
+    { bars: 0 },
+    { bars: 1 },
+    { bars: 2 },
+    { bars: 1 },
+    { bars: 4 },
+    { bars: 2 },
+    { bars: 3 },
+  ],
 };
 
 class PartsLibrary {
@@ -17,9 +25,11 @@ class PartsLibrary {
     // use node-fetch to load json and parse it, placing the array in the inC object.
   }
 
-  retrieve(num) {
-    return inC.parts[num];
+  static getSection(num) {
+    return (num < inC.parts.length) ? Object.assign(inC.parts[num]) : null;
   }
+
+  static get numSections() { return inC.parts.length; }
 }
 
 export default PartsLibrary;

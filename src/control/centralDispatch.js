@@ -50,7 +50,7 @@ class CentralDispatch {
     type.push({ func: callback, singular: true });
   }
 
-  disptchEvent(evtType, ...args) {
+  dispatchEvent(evtType, ...args) {
     // get listeners by event type
     const { evts } = this;
     const listeners = evts.get(evtType) || [];
@@ -60,7 +60,6 @@ class CentralDispatch {
       callback.func(evtType, ...args);
 
       if (callback.singular) {
-        console.log('remove this listener');
         this.removeListener(evtType, callback.func);
       }
     });

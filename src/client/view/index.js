@@ -11,7 +11,7 @@ class Index extends React.Component {
   }
 
   componentDidMount() {
-    Dispatcher.disptchEvent(EventTypes.INIT_COMPLETE);
+    Dispatcher.dispatchEvent(EventTypes.INIT_COMPLETE);
   }
 
   render() {

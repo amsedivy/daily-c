@@ -26,7 +26,7 @@ class Index extends React.Component {
                 <Instrument
                   key={`inC_${Math.floor(Math.random() * 1000)}`}
                   id={`${i}_${inst.voice}`}
-                  section={inst.startPoint}
+                  section={inst.nowPlaying}
                   voice={inst.voice}
                 />))
             }

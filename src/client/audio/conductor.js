@@ -5,7 +5,6 @@ import Metronome from './metronome';
 import Dispatcher from '../../control/centralDispatch';
 import EventTypes from '../../model/enum/eventTypes';
 
-const chanceMngr = new Indeterminancy();
 let instance = null;
 
 class Conudctor {
@@ -14,7 +13,7 @@ class Conudctor {
     if (!instance) {
       instance = this;
       // get number of instrument streams from the chance manager
-      const { numStreams } = chanceMngr;
+      const { numStreams } = Indeterminancy;
       this.streamList = [];
       // create a metronome to control the pace
       this.metronome = new Metronome();

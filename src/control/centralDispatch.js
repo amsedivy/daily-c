@@ -16,29 +16,22 @@ class CentralDispatch {
   }
 
   addListener(evtType, callback) {
-    const { evts } = this;
-
-    if (!evts.get(evtType)) {
-      // create an item on the map if there is none
-      evts.set(evtType, []);
-    }
-
     // get the listener array by event type
-    const type = evts.get(evtType);
+    const type = this.getEventsByType(evtType)
     // add the listener to the event type's array
-    type.push(callback);
+    type.push({ func: callback });
   }
 
   removeListener(evtType, callback) {
     // get the listeners by event
     const { evts } = this;
-    const evt = evts.get(evtType) || [];
-    const long = evt.length || 0;
+    const evtList = evts.get(evtType) || [];
+    const long = evtList.length || 0;
     const matches = [];
 
     // if any of the listeners match the callback add their index to the array
     for (let i = 0; i < long; i += 1) {
-      if (evt[i] === callback) {
+      if (evtList[i].func === callback) {
         matches.push(i);
       }
     }
@@ -46,7 +39,23 @@ class CentralDispatch {
     // reverse the array, to work backwards
     matches.sort((a, b) => b - a);
     // remove all the items at those indices
-    matches.map(idx => evt.slice(idx));
+    matches.map(idx => evtList.splice(idx, 1));
+  }
+
+  once(evtType, callback) {
+    // get the listener array by event type
+    const type = this.getEventsByType(evtType);
+
+    // add the listener to the event type's array
+    type.push({ func: callback, singular: true });
+  }
+
+  bindListener(caller, evtType, callback) {
+    // get the listener array by event type
+    const type = this.getEventsByType(evtType);
+
+    // add the listener to the event type's array, with the scope
+    type.push({ func: callback, scope: caller });
   }
 
   disptchEvent(evtType, ...args) {
@@ -56,8 +65,29 @@ class CentralDispatch {
 
     // fire each listener including the event type and any arguments
     listeners.forEach((callback) => {
-      callback(evtType, ...args);
+      if (callback.scope) {
+        callback.scope[callback.func](evtType, ...args);
+      } else {
+        callback.func(evtType, ...args);
+      }
+
+      if (callback.singular) {
+        console.log('remove this listener');
+        this.removeListener(evtType, callback.func);
+      }
     });
+  }
+
+  getEventsByType(evtName) {
+    const { evts } = this;
+
+    if (!evts.get(evtName)) {
+      // create an item on the map if there is none
+      evts.set(evtName, []);
+    }
+
+    // return the listener array by event type
+    return evts.get(evtName);
   }
 
   get id() {

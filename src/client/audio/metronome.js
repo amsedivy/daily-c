@@ -5,17 +5,23 @@ class Metronome {
   constructor() {
     // set the timespan of a quarternote to a value between 450-550 milliseconds
     this.quaternote = Math.floor(Math.random() * 100) + 450;
+    this.barCounter = 0;
   }
 
   start() {
     // begin the interval
     this.counter = setInterval(() => {
-      EventDispatcher.disptchEvent(EventTypes.BEAT);
-      console.log('beat');
-    }, this.quaternote);
+      // dispatch the beat event
+      EventDispatcher.dispatchEvent(EventTypes.BEAT);
 
-    // fire the first beat
-    EventDispatcher.disptchEvent(EventTypes.BEAT);
+      // keep track of the place in a 'bar' or 4/4 music
+      this.barCounter += 1;
+
+      if (this.barCounter === 4) {
+        this.barCounter = 0;
+        EventDispatcher.dispatchEvent(EventTypes.BAR);
+      }
+    }, this.quaternote);
   }
 
   stop() {

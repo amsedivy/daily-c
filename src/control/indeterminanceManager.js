@@ -1,36 +1,36 @@
 /** this will be a class to manage the different streams of playback
  telling an individual stream to repeat, rest, or advance */
 
-const state = {};
 let instance = null;
 
 class PlaybackManager {
   constructor() {
     if (!instance) {
       instance = this;
-    }
 
-    state.numStreams = Math.floor(Math.random() * 4) + 6;
+      // create these things only once
+      this.state = {};
+      // create a random num of instruments between 6 and 10
+      this.state.numStreams = Math.ceil(Math.random() * 5) + 5;
+    }
     return this;
   }
 
   // stub of example function to determine choice
-  nextAction(maxReps) {
-    const percent = Math.floor(Math.random() * 100) + 1;
-    let action = 'rest';
-    if (percent <= 50) {
-      action = (percent <= 35 && !maxReps) ? 'repeat' : 'advance';
-    } else {
-      action = (percent <= 85) ? 'rest' : 'skip';
-    }
+  nextAction(repsPlayed) {
+    // get a random int between 1-100
+    const percent = Math.ceil(Math.random() * 100);
+    // the more the current piece is played, the more likely to advance
+    const adjust = repsPlayed * 5;
+    // if the random number and the repeat adjustment are more than 75, set advance as the action
+    const action = (percent + adjust < 75) ? 'repeat' : 'advance';
 
+    // return the decided action
     return action;
   }
 
   // just statics for now until we set up singleton values
-  get numStreams() {
-    return state.numStreams;
-  }
+  get numStreams() { return this.state.numStreams; }
 }
 
 

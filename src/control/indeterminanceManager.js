@@ -34,4 +34,4 @@ class PlaybackManager {
 }
 
 
-export default PlaybackManager;
+export default new PlaybackManager();

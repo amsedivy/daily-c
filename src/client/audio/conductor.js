@@ -2,8 +2,8 @@
 import Indeterminancy from '../../control/indeterminanceManager';
 import Stream from './playbackStream';
 import Metronome from './metronome';
-import EventDispatcher from '../../control/centralDispatch';
-import EvtTypes from '../../model/enum/eventTypes';
+import Dispatcher from '../../control/centralDispatch';
+import EventTypes from '../../model/enum/eventTypes';
 
 const chanceMngr = new Indeterminancy();
 let instance = null;
@@ -29,7 +29,12 @@ class Conudctor {
       this.uid = Math.floor(Math.random() * 999);
 
       // add event listeners
-      EventDispatcher.addListener(EvtTypes.SECTION_COMPLETE, this.handleSectionComplete);
+      Dispatcher.once(EventTypes.INIT_COMPLETE, () => {
+        console.log('yippidang');
+        // start the metronome
+        this.metronome.start();
+      });
+      Dispatcher.addListener(EventTypes.SECTION_COMPLETE, this.handleSectionComplete);
     }
 
     // return the unique instance
@@ -37,6 +42,7 @@ class Conudctor {
   }
 
   initPeformance() {
+    console.log('yippidang');
     // start the metronome
     this.metronome.start();
   }

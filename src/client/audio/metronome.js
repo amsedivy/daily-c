@@ -11,6 +11,7 @@ class Metronome {
     // begin the interval
     this.counter = setInterval(() => {
       EventDispatcher.disptchEvent(EventTypes.BEAT);
+      console.log('beat');
     }, this.quaternote);
 
     // fire the first beat

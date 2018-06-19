@@ -10,19 +10,23 @@ class Index extends React.Component {
 
   render() {
     const ensemble = Conductor.streams;
+    console.log(ensemble[0].voice);
     return (
       <div>
         <h1>build out views here (see designs folder)</h1>
-        <div className="ensemble">
-          {
-            ensemble.map((inst, i) => (
-              <Instrument
-                key={`inst${inst.startPoint * Math.random()}`}
-                id={`instrument ${i + 1}`}
-                section={inst.startPoint}
-              />))
-          }
-        </div>
+        <table className="ensemble">
+          <tbody>
+            {
+              ensemble.map((inst, i) => (
+                <Instrument
+                  key={`inC_${Math.floor(Math.random() * 1000)}`}
+                  id={`${i}_${inst.voice}`}
+                  section={inst.startPoint}
+                  voice={inst.voice}
+                />))
+            }
+          </tbody>
+        </table>
       </div>
     );
   }

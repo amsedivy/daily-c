@@ -1,13 +1,24 @@
 import React from 'react';
-import InstrumentTypes from '../../../model/enum/instrumentTypes';
+import PropTypes from 'prop-types';
 
 function instrumental(props) {
-  const performer = InstrumentTypes[Math.floor(Math.random() * InstrumentTypes.length)];
+  const { voice, section } = props;
   return (
-    <div className="instrument">
-      <div className="performer">{performer}</div>
-      <div>{` section: ${props.section + 1}`}</div>
-    </div>);
+    <tr className="instrument">
+      <td className="performer">{voice}</td>
+      <td>{`section: ${section}`}</td>
+    </tr>);
 }
 
 export default instrumental;
+
+instrumental.propTypes = {
+  voice: PropTypes.string,
+  section: PropTypes.number,
+};
+
+instrumental.defaultProps = {
+  voice: null,
+  section: 0,
+};
+

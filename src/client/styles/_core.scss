@@ -1,12 +1,10 @@
 .ensemble {
   position: relative;
   background: #bfbca9;
-  width: 80%;
   left: 2em;
   .instrument {
-    padding: 1em;
-    div {
-      display: inline-block;
+    td {
+      padding: 1em;
       margin-right: 1em;
     }
     .performer {

@@ -1,9 +1,16 @@
 .ensemble {
   position: relative;
-  background: blanchedalmond;
+  background: #bfbca9;
   width: 80%;
   left: 2em;
   .instrument {
     padding: 1em;
+    div {
+      display: inline-block;
+      margin-right: 1em;
+    }
+    .performer {
+      font-weight: bold;
+    }
   }
 }

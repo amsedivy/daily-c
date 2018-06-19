@@ -30,7 +30,6 @@ class Conudctor {
 
       // add event listeners
       Dispatcher.once(EventTypes.INIT_COMPLETE, () => {
-        console.log('yippidang');
         // start the metronome
         this.metronome.start();
       });
@@ -39,12 +38,6 @@ class Conudctor {
 
     // return the unique instance
     return instance;
-  }
-
-  initPeformance() {
-    console.log('yippidang');
-    // start the metronome
-    this.metronome.start();
   }
 
   handleSectionComplete(evt, payload) {

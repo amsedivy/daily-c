@@ -17,7 +17,7 @@ class CentralDispatch {
 
   addListener(evtType, callback) {
     // get the listener array by event type
-    const type = this.getEventsByType(evtType)
+    const type = this.getEventsByType(evtType);
     // add the listener to the event type's array
     type.push({ func: callback });
   }
@@ -50,14 +50,6 @@ class CentralDispatch {
     type.push({ func: callback, singular: true });
   }
 
-  bindListener(caller, evtType, callback) {
-    // get the listener array by event type
-    const type = this.getEventsByType(evtType);
-
-    // add the listener to the event type's array, with the scope
-    type.push({ func: callback, scope: caller });
-  }
-
   disptchEvent(evtType, ...args) {
     // get listeners by event type
     const { evts } = this;
@@ -65,11 +57,7 @@ class CentralDispatch {
 
     // fire each listener including the event type and any arguments
     listeners.forEach((callback) => {
-      if (callback.scope) {
-        callback.scope[callback.func](evtType, ...args);
-      } else {
-        callback.func(evtType, ...args);
-      }
+      callback.func(evtType, ...args);
 
       if (callback.singular) {
         console.log('remove this listener');

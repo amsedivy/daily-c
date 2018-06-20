@@ -25,7 +25,7 @@ class Index extends React.Component {
               ensemble.map((inst, i) => (
                 <Instrument
                   key={`inC_${Math.floor(Math.random() * 1000)}`}
-                  id={`${i}_${inst.voice}`}
+                  id={inst.id}
                   section={inst.nowPlaying}
                   voice={inst.voice}
                 />))

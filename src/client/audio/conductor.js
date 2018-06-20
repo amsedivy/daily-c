@@ -20,7 +20,7 @@ class Conudctor {
 
       for (let i = 0; i < numStreams; i += 1) {
         // create and store new instrument streams
-        const stream = new Stream();
+        const stream = new Stream(`instrument_${i}`);
         this.streamList.push(stream);
       }
 

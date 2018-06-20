@@ -9,7 +9,6 @@ class PlaybackStream {
   constructor(id) {
     // unique id
     this.uid = id;
-    console.log(id);
     // pick a number between 0 and 1
     this.currentSection = Math.round(Math.random());
     // select an instrument at random from the enums

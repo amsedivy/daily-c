@@ -22,7 +22,7 @@ class Index extends React.Component {
         <table className="ensemble">
           <tbody>
             {
-              ensemble.map((inst, i) => (
+              ensemble.map((inst) => (
                 <Instrument
                   key={`inC_${Math.floor(Math.random() * 1000)}`}
                   id={inst.id}

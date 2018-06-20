@@ -23,7 +23,19 @@ describe('test event dispatch', () => {
     };
 
     EventDispatcher.addListener(evt, handler);
-    EventDispatcher.disptchEvent(evt, 1);
+    EventDispatcher.dispatchEvent(evt, 1);
+  });
+});
+
+describe('test event removal', () => {
+  it('event should be able to be removed from the event list type', () => {
+    function handler(eventType) { console.log(eventType); }
+    const evt = 'test_event';
+    EventDispatcher.addListener(evt, handler);
+    EventDispatcher.removeListener(evt, handler);
+    const evtList = EventDispatcher.getEventsByType(evt);
+
+    expect(evtList.length).to.equal(0);
   });
 });
 

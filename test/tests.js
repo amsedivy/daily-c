@@ -28,7 +28,7 @@ describe('test event dispatch', () => {
 });
 
 describe('test event removal', () => {
-  it('event should be able to be removed from the event list type', () => {
+  it('event should be able to be removed from the event list', () => {
     function handler(eventType) { console.log(eventType); }
     const evt = 'test_event';
     EventDispatcher.addListener(evt, handler);

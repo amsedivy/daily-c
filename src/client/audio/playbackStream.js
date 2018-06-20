@@ -8,7 +8,8 @@ import Indeterminancy from '../../control/indeterminanceManager';
 class PlaybackStream {
   constructor(id) {
     // unique id
-    this.id = id;
+    this.uid = id;
+    console.log(id);
     // pick a number between 0 and 1
     this.currentSection = Math.round(Math.random());
     // select an instrument at random from the enums
@@ -39,6 +40,7 @@ class PlaybackStream {
       // reset the bars and repeats
       this.barCounter = 0;
       this.repeats = 0;
+      EventDispatcher.dispatchEvent(`${EventTypes.ADVANCE}_${this.id}`, this.currentSection);
     } else {
       // otherwise, simply increment the bars and repeats
       this.repeats += 1;
@@ -55,6 +57,7 @@ class PlaybackStream {
 
   get nowPlaying() { return this.currentSection; }
   get voice() { return this.instrument; }
+  get id() { return this.uid; }
 }
 
 export default PlaybackStream;

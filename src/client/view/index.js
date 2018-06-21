@@ -1,5 +1,5 @@
 import React from 'react';
-import Conductor from '../audio/conductor';
+import Conductor from '../../control/conductor';
 import Instrument from './components/instrument';
 import Dispatcher from '../../control/centralDispatch';
 import EventTypes from '../../model/enum/eventTypes';
@@ -24,7 +24,7 @@ class Index extends React.Component {
             {
               ensemble.map((inst) => (
                 <Instrument
-                  key={`inC_${Math.floor(Math.random() * 1000)}`}
+                  key={`inC_${(Math.random().toString(36))}`}
                   id={inst.id}
                   section={inst.nowPlaying}
                   voice={inst.voice}

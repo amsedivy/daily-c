@@ -1,4 +1,4 @@
-import Conductor from '../src/client/audio/conductor';
+import Conductor from '../src/control/conductor';
 
 let idInt;
 

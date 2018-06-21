@@ -36,7 +36,7 @@ class Metronome {
     clearInterval(this.counter);
   }
 
-  playBeat(firstBeat) {
+  playBeat(lastBeat) {
     // if we don't have audio context, there's just no point in going on
     if (!this.context) return;
 
@@ -45,7 +45,7 @@ class Metronome {
     // create a refrence to now
     const now = context.currentTime;
     // set the pitch in Hz
-    const pitch = (firstBeat) ? 265 : 200;
+    const pitch = (lastBeat) ? 265 : 200;
 
     // give the oscillator time context
     osc.frequency.setValueAtTime(pitch, now);
@@ -54,8 +54,8 @@ class Metronome {
     // begin the pitch, raise the volume then decrease it
     // as an oscillator is just a held tone, so the beat is created by volume changes
     amp.gain.setValueAtTime(amp.gain.value, now);
-    amp.gain.linearRampToValueAtTime(0.5, context.currentTime + 0.01);
-    amp.gain.linearRampToValueAtTime(0.0, context.currentTime + 0.11);
+    amp.gain.linearRampToValueAtTime(0.5, now + 0.01);
+    amp.gain.linearRampToValueAtTime(0.0, now + 0.11);
   }
 
   setAudioContext() {

@@ -9,12 +9,14 @@ class PlaybackStream {
   constructor(id) {
     // unique id
     this.uid = id;
+
     // pick a number between 0 and 1
     this.currentSection = Math.round(Math.random());
     // select an instrument at random from the enums
     this.instrument = InstrumentTypes[Math.floor(Math.random() * InstrumentTypes.length)];
     // get the playback information for this section
     this.sectionObj = CSections.getSection(this.currentSection);
+
     // keep track of time and repeats
     this.barCounter = 0;
     this.repeats = 0;
@@ -33,17 +35,9 @@ class PlaybackStream {
     // get the type of action to do from the indeterminance manager
     const action = Indeterminancy.nextAction(this.repeats);
     if (action === 'advance') {
-      // if were are to advance, increment the section and get the respective obj from the model
-      this.currentSection += 1;
-      this.sectionObj = CSections.getSection(this.currentSection);
-      // reset the bars and repeats
-      this.barCounter = 0;
-      this.repeats = 0;
-      EventDispatcher.dispatchEvent(`${EventTypes.ADVANCE}_${this.id}`, this.currentSection);
+      this.advanceSection();
     } else {
-      // otherwise, simply increment the bars and repeats
-      this.repeats += 1;
-      this.barCounter += 1;
+      this.repeatSection();
     }
 
     // if this instrument has played all the sections there are to play
@@ -52,6 +46,28 @@ class PlaybackStream {
       EventDispatcher.removeListener(EventTypes.BAR, this.barListener);
       EventDispatcher.dispatchEvent(EventTypes.INSTRUMENT_COMPLETE, this.id);
     }
+  }
+
+  advanceSection() {
+    // if were are to advance, increment the section and get the respective obj from the model
+    this.currentSection += 1;
+    this.sectionObj = CSections.getSection(this.currentSection);
+    // reset the bars and repeats
+    this.barCounter = 0;
+    this.repeats = 0;
+
+    EventDispatcher.dispatchEvent(`${EventTypes.ADVANCE}_${this.id}`, this.currentSection);
+  }
+
+  repeatSection() {
+    // otherwise, simply increment the bars and repeats
+    this.repeats += 1;
+    this.barCounter += 1;
+
+    EventDispatcher.dispatchEvent(
+      EventTypes.ADD_REPEAT,
+      { voice: this.uid, section: this.currentSection },
+    );
   }
 
   get nowPlaying() { return this.currentSection; }
